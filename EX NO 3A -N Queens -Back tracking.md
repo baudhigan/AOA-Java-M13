@@ -1,6 +1,5 @@
 
 # EX 3A N Queens Problem - Backtracking Approach.
-## DATE:
 ## AIM:
 To Write a Java program for N queens using backtracking approach.
 You are given an integer N. For a given N x N chessboard, find a way to place 'N' queens such that no queen can attack any other queen on the chessboard.
@@ -18,23 +17,100 @@ If solution exists Print a binary matrix as output that has 1s for the cells whe
 If there is no solution to the problem  print  "Solution does not exist"
 
 ## Algorithm
-1. 
-2. 
-3. 
-4.  
-5.   
+Start the program and read the value of N (size of the chessboard) from the user.
+Initialize an N x N board filled with zeros to represent an empty chessboard.
+Use the isSafe() function to check if a queen can be safely placed at a given position (no other queen in the same row, column, or diagonal).
+Use recursion (solveNQUtil()) to try placing queens column by column, backtracking if a conflict occurs.
+If a solution is found, print the board with 1s marking queen positions; otherwise, print "Solution does not exist".  
 
 ## Program:
 ```
-/*
-Program to implement Reverse a String
-Developed by: 
-Register Number:  
-*/
+
+import java.util.Scanner;
+
+public class NQueens {
+    static int N;
+
+    
+    static void printSolution(int[][] board) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    
+    static boolean isSafe(int[][] board, int row, int col) {
+        // Check left side of current row
+        for (int i = 0; i < col; i++)
+            if (board[row][i] == 1)
+                return false;
+
+       
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        
+        for (int i = row, j = col; i < N && j >= 0; i++, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        return true;
+    }
+
+    // Recursive utility function to solve N-Queens
+    static boolean solveNQUtil(int[][] board, int col) {
+        //Add your code Here
+        if(col>=N)
+        {
+            return true;
+        }
+        
+        for (int i=0;i<N;i++)
+        {
+            if(isSafe(board, i,col))
+            {
+                board[i][col]=1;
+            
+            if(solveNQUtil(board,col+1))
+            
+               
+                return true;
+                board[i][col]=0;
+            }
+        }
+        return false;
+    }
+
+    
+    static boolean solveNQ() {
+        int[][] board = new int[N][N];
+
+        if (!solveNQUtil(board, 0)) {
+            System.out.println("Solution does not exist");
+            return false;
+        }
+
+        printSolution(board);
+        return true;
+    }
+
+   
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        N = scanner.nextInt(); // Accept board size
+        solveNQ();
+    }
+}
+
 ```
 
 ## Output:
 
+<img width="633" height="261" alt="image" src="https://github.com/user-attachments/assets/86fabaaf-3c0b-43bf-897b-41f9e306228a" />
 
 
 ## Result:
